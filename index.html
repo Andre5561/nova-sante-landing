@@ -8,6 +8,7 @@
       name="description"
       content="Nova Santé is a modern private micro-clinic offering comfortable consultations in a calm and welcoming environment."
     />
+    <link rel="icon" type="image/png" href="assets/Logo-NovaSanté.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -21,16 +22,14 @@
                 alt="Nova Santé logo"
                 class="brand__logo-image"
               />
-              <div class="brand__text">
-                <span class="brand__name">Nova Santé</span>
-                <span class="brand__tag">Private Micro-Clinic</span>
-              </div>
             </a>
 
             <div class="topbar__actions">
-              <a href="#about" class="topbar__link">About</a>
-              <a href="#services" class="topbar__link">Services</a>
-              <a href="#contact" class="topbar__link">Contact</a>
+              <div class="nav-links" id="navLinks">
+                <a href="#about" class="topbar__link">About</a>
+                <a href="#services" class="topbar__link">Services</a>
+                <a href="#contact" class="topbar__link">Contact</a>
+              </div>
 
               <button
                 class="theme-toggle"
@@ -40,6 +39,19 @@
               >
                 <span class="theme-toggle__sun">Light</span>
                 <span class="theme-toggle__moon">Dark</span>
+              </button>
+
+              <button
+                class="burger"
+                id="burger"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="navLinks"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
               </button>
             </div>
           </nav>
@@ -251,6 +263,8 @@
     <script>
       const root = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
+      const burger = document.getElementById("burger");
+      const navLinks = document.getElementById("navLinks");
 
       const savedTheme = localStorage.getItem("nova-theme");
       if (savedTheme) {
@@ -262,6 +276,22 @@
         const newTheme = currentTheme === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", newTheme);
         localStorage.setItem("nova-theme", newTheme);
+      });
+
+      burger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        burger.classList.toggle("active");
+
+        const isExpanded = burger.classList.contains("active");
+        burger.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("active");
+          burger.classList.remove("active");
+          burger.setAttribute("aria-expanded", "false");
+        });
       });
     </script>
   </body>
